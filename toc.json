@@ -1,0 +1,104 @@
+{
+  "collapseTableOfContents": false,
+  "items": [
+ 
+    {
+      "type": "divider",
+      "title": "Overview"
+    },
+    {
+      "type": "item",
+      "title": "Overview",
+      "uri": "/docs/public_docs/README.md"
+    },  
+    {
+      "type": "divider",
+      "title": "Authentication"
+    },
+    {
+      "type": "item",
+      "title": "Authentication",
+      "uri": "/docs/public_docs/AUTHENTICATION.md"
+    },   
+    {
+      "type": "item",
+      "title": "FeeWise api request / response signature(s)",
+      "uri": "/docs/public_docs/HMAC.md"
+    },  
+
+    
+    {
+      "type": "divider",
+      "title": "Requesting Payments"
+    },
+    {
+      "type": "item",
+      "title": "Making Requests",
+      "uri": "/docs/public_docs/MAKING_REQUESTS.md"
+    },      
+    {
+      "type": "item",
+      "title": "Create a Trust Deposit",
+      "uri": "/docs/public_docs/CREATE_A_TRUST_DEPOSIT.md"
+    },
+    {
+      "type": "item",
+      "title": "Create an Invoice",
+      "uri": "/docs/public_docs/CREATE_AN_INVOICE.md"
+    },
+    
+    {
+      "type": "divider",
+      "title": "Receiving Events"
+    },
+    {
+      "type": "item",
+      "title": "Webhook Management",
+      "uri": "/docs/public_docs/WEBHOOKS.md"
+    },    
+    {
+      "type": "item",
+      "title": "Payment Events",
+      "uri": "/docs/public_docs/PAYMENT_EVENTS.md"
+    },
+    {
+      "type": "item",
+      "title": "Payout Events",
+      "uri": "/docs/public_docs/PAYOUT_EVENTS.md"
+    },
+
+    {
+      "type": "divider",
+      "title": "Miscellaneous"
+    },
+    {
+      "type": "item",
+      "title": "Changelog",
+      "uri": "/docs/public_docs/CHANGELOG.md"
+    },
+    {
+      "type": "item",
+      "title": "RoadMap",
+      "uri": "/docs/public_docs/ROADMAP.md"
+    },
+    {
+      "type": "item",
+      "title": "Sandbox",
+      "uri": "/docs/public_docs/SANDBOX.md"
+    },
+    {
+      "type": "item",
+      "title": "Client Code",
+      "uri": "/docs/public_docs/API_CODE_GENERATION.md"
+    },
+    {
+      "type": "divider",
+      "title": "APIS"
+    },
+    {
+      "type": "item",
+      "title": "FeeWise Partner API",
+      "uri": "/reference/partner-openapispec.yaml"
+    }
+  ]
+}
