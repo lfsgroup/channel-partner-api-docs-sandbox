@@ -5227,7 +5227,7 @@ components:
           $ref: "#/components/schemas/WebhookStatus"
         events:
           type: array
-          example: [ "artifact.invoice.created", "payment.card.successful", "payout.paid" ]
+          example: [ "artifact.invoice.created", "payout.paid" ]
           items:
             $ref: '#/components/schemas/WebhookEventType'
         authentication:
