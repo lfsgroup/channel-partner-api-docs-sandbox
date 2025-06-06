@@ -2438,7 +2438,7 @@ paths:
             name: uuid
 
     get:
-      summary: List all firms bank accounts.
+      summary: List bank accounts
       description: Return all bank accounts linked to a firm.  If no accounts are linked an empty array is returned.
       operationId: getFirmBankAccounts
       tags:
@@ -2492,11 +2492,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
-      summary: Create an account
+      summary: Create a bank account
       description: |
         Create an Office or Trust account for a Firm.
 
-        New account validation is subject to [Stripe's validation rules](https://docs.stripe.com/connect/payouts-bank-accounts?bank-account-collection-integration=direct-api&bank-account-collection-method=manual-entry&account-country=US#collecting-external-accounts), which vary by region. Please refer to these rules if you're running into validation errors.
+        If the account doesn't already exit, the new account will be created in `Pending` state. You need to listen for the `firm.bank-account.updated` webhook to know when the account is `Valid` or `Invalid`.
+        New account validation is subject to [Stripe's validation rules](https://docs.stripe.com/connect/payouts-bank-accounts?bank-account-collection-integration=direct-api&bank-account-collection-method=manual-entry&account-country=US#collecting-external-accounts), which vary by region. Please refer to these rules if the `firm.bank-account.updated` webhook says your account is `Invalid`.
       operationId: createFirmBankAccount
       tags:
         - Firm
@@ -4487,9 +4488,25 @@ paths:
             name: uuid
 
     post:
+      summary: Confirm a pending charge payment.
       description: confirm the payment of a pending charge using the provided charge_id and payment_id
       tags:
         - Payments
+      requestBody:
+        description:
+          POST Body contains Metadata to apply to the charge. 
+          Warning, will replace the charge's existing metadata.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  $ref: '#/components/schemas/ChannelPartnerMetadata'
+            example:
+                metadata:
+                    key1: value1
+                    key2: value2
       operationId: postConfirmChargePayment
       responses:
         '200':
@@ -5216,7 +5233,7 @@ components:
           type: array
           example: [ "artifact.invoice.created", "payment.card.successful", "payout.paid" ]
           items:
-            type: string
+            $ref: '#/components/schemas/WebhookEventType'
         authentication:
           $ref: "#/components/schemas/WebhookApiAuthentication"
       required:
@@ -5685,6 +5702,35 @@ components:
       required:
         - payouts
 
+    WebhookEventType:
+      type: string
+      enum:
+        - artifact.invoice.created
+        - artifact.invoice.updated
+        - artifact.trust-deposit.created
+        - artifact.trust-deposit.updated
+        - artifact.statement.created
+        - artifact.charge.created
+        - artifact.charge.updated
+        - payment.successful
+        - payment.processing
+        - payment.failed
+        - payment.all
+        - payment.authorised
+        - payout.paid
+        - payout.failed
+        - firm.status.updated
+        - firm.bank-account.updated
+        - firm.bank-account.created
+        - firm.bank-account.deleted
+        - firm.surcharge-settings.updated
+        - firm.pricing.updated
+        - webhook.failed
+        - webhook.sent
+        - webhook.triggered
+        - webhook.created
+        - webhook.updated
+        - webhook.deleted
 
     WebhookEvent:
       type: object
@@ -5694,7 +5740,7 @@ components:
         - event
       properties:
         event_type:
-          type: string
+          $ref: '#/components/schemas/WebhookEventType'
         event_id:
           type: string
           format: uuid
@@ -6539,7 +6585,7 @@ components:
         status:
           $ref: '#/components/schemas/FirmOnboardingStatus'
         metadata:
-          # TODO: refactor to use FirmChannelPartnerMetadata
+          # TODO: refactor to use ChannelPartnerMetadata
           additionalProperties:
             maxLength: 500
             type: string
@@ -6547,10 +6593,10 @@ components:
             Set of key value pairs attached to the firm object when it was created.
           type: object
 
-    FirmChannelPartnerMetadata:
+    ChannelPartnerMetadata:
       type: object
       description: >-
-        Set of key value pairs attached to the firm object when it was created.
+        Set of key value pairs attached to the object when it was created.
       additionalProperties:
         maxLength: 500
         type: string
@@ -6608,7 +6654,7 @@ components:
             - Valid
             - Invalid
         metadata:
-          $ref: '#/components/schemas/FirmChannelPartnerMetadata'
+          $ref: '#/components/schemas/ChannelPartnerMetadata'
       required:
         - country_code
         - account_name
@@ -6636,7 +6682,7 @@ components:
         surcharge_settings:
           $ref:  "#/components/schemas/SurchargeSettings"
         metadata:
-          $ref: '#/components/schemas/FirmChannelPartnerMetadata'
+          $ref: '#/components/schemas/ChannelPartnerMetadata'
           
     FirmPricingUpdatedEvent:
       type: object
@@ -6653,7 +6699,7 @@ components:
             path: github.com/gofrs/uuid
             name: uuid
         metadata:
-          $ref: '#/components/schemas/FirmChannelPartnerMetadata'
+          $ref: '#/components/schemas/ChannelPartnerMetadata'
         products:
           type: array
           items:
