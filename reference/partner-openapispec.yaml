@@ -1388,7 +1388,6 @@ paths:
                     status: Enabled,
                     events: [
                       'artifact.invoice.created',
-                      'payment.card.successful',
                       'payout.paid'
                     ],
                     authentication: {
@@ -1439,7 +1438,6 @@ paths:
                     },
                     events: [
                       'artifact.invoice.created',
-                      'payment.card.successful',
                       'payout.paid'
                     ]
                   }
@@ -1462,7 +1460,6 @@ paths:
                     },
                     events: [
                       'artifact.invoice.created',
-                      'payment.card.successful',
                       'payout.paid'
                     ]
                   }
@@ -1480,7 +1477,6 @@ paths:
                   description: Testing my webhook,
                   events: [
                     'artifact.invoice.created',
-                    'payment.card.successful',
                     'payout.paid'
                   ],
                   status: Enabled,
