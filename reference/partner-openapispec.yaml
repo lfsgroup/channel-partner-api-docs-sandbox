@@ -5229,7 +5229,8 @@ components:
           type: array
           example: [ "artifact.invoice.created", "payout.paid" ]
           items:
-            $ref: '#/components/schemas/WebhookEventType'
+            type: string
+            example: artifact.invoice.created
         authentication:
           $ref: "#/components/schemas/WebhookApiAuthentication"
       required:
@@ -5698,36 +5699,6 @@ components:
       required:
         - payouts
 
-    WebhookEventType:
-      type: string
-      enum:
-        - artifact.invoice.created
-        - artifact.invoice.updated
-        - artifact.trust-deposit.created
-        - artifact.trust-deposit.updated
-        - artifact.statement.created
-        - artifact.charge.created
-        - artifact.charge.updated
-        - payment.successful
-        - payment.processing
-        - payment.failed
-        - payment.all
-        - payment.authorised
-        - payout.paid
-        - payout.failed
-        - firm.status.updated
-        - firm.bank-account.updated
-        - firm.bank-account.created
-        - firm.bank-account.deleted
-        - firm.surcharge-settings.updated
-        - firm.pricing.updated
-        - webhook.failed
-        - webhook.sent
-        - webhook.triggered
-        - webhook.created
-        - webhook.updated
-        - webhook.deleted
-
     WebhookEvent:
       type: object
       required:
@@ -5736,7 +5707,8 @@ components:
         - event
       properties:
         event_type:
-          $ref: '#/components/schemas/WebhookEventType'
+          type: string
+          example: firm.bank-account.created
         event_id:
           type: string
           format: uuid
