@@ -46,6 +46,11 @@
       "title": "Create an Invoice",
       "uri": "/docs/public_docs/CREATE_AN_INVOICE.md"
     },
+    {
+      "type": "item",
+      "title": "Manage Firm Bank Accounts",
+      "uri": "/docs/public_docs/BANK_ACCOUNTS.md"
+    },
     
     {
       "type": "divider",
